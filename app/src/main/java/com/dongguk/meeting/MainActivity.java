@@ -1,117 +1,95 @@
 package com.dongguk.meeting;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Context;
-import android.location.Location;
-import android.location.LocationListener;
-import android.os.Build;
+
+import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
-import android.content.pm.PackageManager;
-import android.location.LocationManager;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 
+import java.io.IOException;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button button1;
-    private TextView txtResult;
-    Call<data_model> call;
-    TextView textView;
-
-    // 집 : 126.976230, 37.490379
-    // 원흥관 : 37.558514, 126.998931
-    String lang = "0";
-    String x = "126.9997567";
-    String y = "37.5585916";
-    String radius = "1000";
-    String stationClass = "2";
-    String apiKey = "3qhygnrwYaEAhYr8/NKH+Vv0i0ZcsLW/YrVaBbY4toQ";
+    private Button btn_next;
+    private EditText ed_address1, ed_address2, ed_address3;
+    List<Address> addr_list1, addr_list2, addr_list3 = null;
+    String addr1, addr2, addr3 = null;
+    String x_1, x_2, x_3, y_1, y_2, y_3 = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // 현재 위도, 경도를 기점으로 가까운 지하철 역 찾기
-        textView =findViewById(R.id.txt_view);
-        call = retrofit_client.getApiService().test_api_get(lang, x, y, radius, stationClass, apiKey);
-        call.enqueue(new Callback<data_model>(){
-            //콜백 받는 부분
-            @Override
-            public void onResponse(Call<data_model> call, Response<data_model> response) {
-                data_model result = response.body();
-                String str = "";
+        final Geocoder geocoder = new Geocoder(this);
 
-                int count = result.getResult().getCount();
-                List<Station> stationList = result.getResult().getStation();
-                for (int i = 0; i < count; i++) {
-                    str += (i+1) + ". ";
-                    str += "[" + stationList.get(i).getType() + "호선] " + stationList.get(i).getStationName() + "역 \n";
-                }
-                textView.setText(str);
-            }
+        // 레이아웃 변수 선언
+        btn_next = (Button)findViewById(R.id.button);
+        ed_address1 = (EditText)findViewById(R.id.ed_address1);
+        ed_address2 = (EditText)findViewById(R.id.ed_address2);
+        ed_address3 = (EditText)findViewById(R.id.ed_address3);
 
-            @Override
-            public void onFailure(Call<data_model> call, Throwable t) {
-
-            }
-        });
-
-        // 위도/경도 확인
-        button1 = (Button)findViewById(R.id.button1);
-        txtResult = (TextView)findViewById(R.id.txtResult);
-
-        // 위치 관리자 객체 참조하기
-        final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        button1.setOnClickListener(new View.OnClickListener() {
+        // 버튼 클릭 시 이벤트
+        btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                txtResult.setText("위치정보 : " + "gps" + "\n" + "위도 : " + x + "\n" + "경도 : " + y + "\n");
+                // 입력한 주소에 대한 위도, 경도 찾기
+                addr1 = ed_address1.getText().toString();
+                addr2 = ed_address2.getText().toString();
+                addr3 = ed_address3.getText().toString();
 
-//                if ( Build.VERSION.SDK_INT >= 23 &&
-//                        ContextCompat.checkSelfPermission( getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-//                    ActivityCompat.requestPermissions( MainActivity.this, new String[] {
-//                            android.Manifest.permission.ACCESS_FINE_LOCATION}, 0 );
-//                }
-//                else{
-//                    // 가장최근 위치정보 가져오기
-//                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//                    if(location != null) {
-//                        String provider = location.getProvider();
-//                        double longitude = location.getLongitude();
-//                        double latitude = location.getLatitude();
-//                        double altitude = location.getAltitude();
-//                        txtResult.setText("위치정보 : " + provider + "\n" + "위도 : " + longitude + "\n" + "경도 : " + latitude + "\n" + "고도 : " + altitude);
-//                    }
-//
-//                    // 위치정보를 원하는 시간, 거리마다 갱신해준다.
-//                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, gpsLocationListener);
-//                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, gpsLocationListener);
-//                }
+                try {
+                    addr_list1 = geocoder.getFromLocationName(addr1,10); // 지역이름, 읽을 개수
+                    addr_list2 = geocoder.getFromLocationName(addr2,10); // 지역이름, 읽을 개수
+                    addr_list3 = geocoder.getFromLocationName(addr3,10); // 지역이름, 읽을 개수
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e("wonny","입출력 오류 - 서버에서 주소변환시 에러발생");
+                }
+                if (addr_list1 != null) {
+                    if (addr_list1.size() == 0) {
+                        Log.e("wonny","주소1 : 해당되는 주소 정보는 없습니다");
+                    } else {
+                        x_1 = String.valueOf(addr_list1.get(0).getLongitude());
+                        y_1 = String.valueOf(addr_list1.get(0).getLatitude());
+                    }
+                }
+                if (addr_list2 != null) {
+                    if (addr_list2.size() == 0) {
+                        Log.e("wonny","주소2 : 해당되는 주소 정보는 없습니다");
+                    } else {
+                        x_2 = String.valueOf(addr_list2.get(0).getLongitude());
+                        y_2 = String.valueOf(addr_list2.get(0).getLatitude());
+                    }
+                }
+                if (addr_list3 != null) {
+                    if (addr_list3.size() == 0) {
+                        Log.e("wonny","주소3 : 해당되는 주소 정보는 없습니다");
+                    } else {
+                        x_3 = String.valueOf(addr_list3.get(0).getLongitude());
+                        y_3 = String.valueOf(addr_list3.get(0).getLatitude());
+                    }
+                }
+
+
+                // 화면 전환
+                Intent intent = new Intent(getApplicationContext(), FindNearStationActivity.class);
+                intent.putExtra("addr1", addr1);
+                intent.putExtra("addr2", addr2);
+                intent.putExtra("addr3", addr3);
+                intent.putExtra("x_1", x_1);    intent.putExtra("y_1", y_1);
+                intent.putExtra("x_2", x_2);    intent.putExtra("y_2", y_2);
+                intent.putExtra("x_3", x_3);    intent.putExtra("y_3", y_3);
+                startActivity(intent);
             }
         });
+        // OnClick
     }
-    final LocationListener gpsLocationListener = new LocationListener() {
-        public void onLocationChanged(Location location) {
-            String provider = location.getProvider();  // 위치정보
-            double longitude = location.getLongitude(); // 위도
-            double latitude = location.getLatitude(); // 경도
-            double altitude = location.getAltitude(); // 고도
-            txtResult.setText("위치정보 : " + provider + "\n" + "위도 : " + longitude + "\n" + "경도 : " + latitude + "\n" + "고도 : " + altitude);
-        }
-        public void onStatusChanged(String provider, int status, Bundle extras) {}
-        public void onProviderEnabled(String provider) {}
-        public void onProviderDisabled(String provider) {}
-    };
 }

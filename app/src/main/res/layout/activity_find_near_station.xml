@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FindNearStationActivity">
+
+    <TextView
+        android:id="@+id/txt1"
+        android:textSize="10pt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <TextView
+        android:id="@+id/txt1_station"
+        android:textSize="10pt"
+        android:textColor="#ff0000"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="53dp" />
+
+
+    <TextView
+        android:id="@+id/txt2"
+        android:textSize="10pt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <TextView
+        android:id="@+id/txt2_station"
+        android:textSize="10pt"
+        android:layout_width="match_parent"
+        android:textColor="#ff0000"
+        android:layout_height="50dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="53dp" />
+
+    <TextView
+        android:id="@+id/txt3"
+        android:layout_width="match_parent"
+        android:textSize="10pt"
+        android:layout_height="50dp" />
+
+    <TextView
+        android:id="@+id/txt3_station"
+        android:layout_width="match_parent"
+        android:textSize="10pt"
+        android:textColor="#ff0000"
+        android:layout_height="50dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="53dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="각 주소에서 가장 가까운 역 찾기" />
+</LinearLayout>

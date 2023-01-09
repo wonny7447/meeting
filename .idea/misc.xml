@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/jiwon/AndroidStudioProjects/meeting/app/src/main/res/layout/activity_main.xml" value="0.13858695652173914" />
+        <entry key="..\:/Users/jiwon/AndroidStudioProjects/meeting/app/src/main/res/layout/activity_find_near_station.xml" value="0.2359375" />
+        <entry key="..\:/Users/jiwon/AndroidStudioProjects/meeting/app/src/main/res/layout/activity_geo_coding.xml" value="0.19322916666666667" />
+        <entry key="..\:/Users/jiwon/AndroidStudioProjects/meeting/app/src/main/res/layout/activity_main.xml" value="0.264" />
       </map>
     </option>
   </component>
