@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
     // 집 : 126.976230, 37.490379
     // 원흥관 : 37.558514, 126.998931
     String lang = "0";
-    String x = "126.998931";
-    String y = "37.558514";
+    String x = "126.9997567";
+    String y = "37.5585916";
     String radius = "1000";
     String stationClass = "2";
     String apiKey = "3qhygnrwYaEAhYr8/NKH+Vv0i0ZcsLW/YrVaBbY4toQ";
@@ -76,26 +76,29 @@ public class MainActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ( Build.VERSION.SDK_INT >= 23 &&
-                        ContextCompat.checkSelfPermission( getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-                    ActivityCompat.requestPermissions( MainActivity.this, new String[] {
-                            android.Manifest.permission.ACCESS_FINE_LOCATION}, 0 );
-                }
-                else{
-                    // 가장최근 위치정보 가져오기
-                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    if(location != null) {
-                        String provider = location.getProvider();
-                        double longitude = location.getLongitude();
-                        double latitude = location.getLatitude();
-                        double altitude = location.getAltitude();
-                        txtResult.setText("위치정보 : " + provider + "\n" + "위도 : " + longitude + "\n" + "경도 : " + latitude + "\n" + "고도 : " + altitude);
-                    }
 
-                    // 위치정보를 원하는 시간, 거리마다 갱신해준다.
-                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, gpsLocationListener);
-                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, gpsLocationListener);
-                }
+                txtResult.setText("위치정보 : " + "gps" + "\n" + "위도 : " + x + "\n" + "경도 : " + y + "\n");
+
+//                if ( Build.VERSION.SDK_INT >= 23 &&
+//                        ContextCompat.checkSelfPermission( getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+//                    ActivityCompat.requestPermissions( MainActivity.this, new String[] {
+//                            android.Manifest.permission.ACCESS_FINE_LOCATION}, 0 );
+//                }
+//                else{
+//                    // 가장최근 위치정보 가져오기
+//                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//                    if(location != null) {
+//                        String provider = location.getProvider();
+//                        double longitude = location.getLongitude();
+//                        double latitude = location.getLatitude();
+//                        double altitude = location.getAltitude();
+//                        txtResult.setText("위치정보 : " + provider + "\n" + "위도 : " + longitude + "\n" + "경도 : " + latitude + "\n" + "고도 : " + altitude);
+//                    }
+//
+//                    // 위치정보를 원하는 시간, 거리마다 갱신해준다.
+//                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, gpsLocationListener);
+//                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, gpsLocationListener);
+//                }
             }
         });
     }
