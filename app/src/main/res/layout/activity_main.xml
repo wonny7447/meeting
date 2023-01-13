@@ -7,12 +7,17 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+
     <EditText
+        android:hint="첫 번째 주소를 입력하세요."
         android:id="@+id/ed_address1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="20"
-        android:text="동작대로29길119"
+        android:text=""
         android:inputType="textPersonName" />
 
     <Space
@@ -21,10 +26,11 @@
 
     <EditText
         android:id="@+id/ed_address2"
+        android:hint="두 번째 주소를 입력하세요."
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="20"
-        android:text="상수동88-24"
+        android:text=""
         android:inputType="textPersonName"/>
 
     <Space
@@ -33,10 +39,11 @@
 
     <EditText
         android:id="@+id/ed_address3"
+        android:hint="세 번째 주소를 입력하세요."
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="20"
-        android:text="필동로1길30"
+        android:text=""
         android:inputType="textPersonName" />
 
     <Space
@@ -47,6 +54,7 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="각 주소에 대한 geocoding 결과 도출" />
+        android:layout_gravity="right"
+        android:text="가까운 지하철역 찾기" />
 
 </LinearLayout>

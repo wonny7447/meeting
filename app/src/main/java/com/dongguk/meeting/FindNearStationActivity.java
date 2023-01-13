@@ -22,6 +22,7 @@ public class FindNearStationActivity extends AppCompatActivity {
     String addr1, addr2, addr3, x_1, x_2, x_3, y_1, y_2, y_3 = "";
     private TextView txt1, txt2, txt3, txt1_station, txt2_station, txt3_station;
     private Button btn_next;
+    String station_1, station_2, station_3;
 
     // 가까운 역 찾기 위한 변수
     Call<data_model> call, call2, call3;
@@ -34,6 +35,7 @@ public class FindNearStationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_near_station);
+        getSupportActionBar().setTitle("2. 각 출발 위치에서 가장 가까운 역 탐색");
 
         // 인텐트 데이터 받기
         Intent intent = getIntent();
@@ -50,85 +52,95 @@ public class FindNearStationActivity extends AppCompatActivity {
         txt2_station = findViewById(R.id.txt2_station);
         txt3_station = findViewById(R.id.txt3_station);
 
+        // 현재 위도, 경도를 기점으로 가까운 지하철 역 찾기
+        call = retrofit_client.getApiService().test_api_get(lang, x_1, y_1, radius, stationClass, apiKey);
+        call.enqueue(new Callback<data_model>(){
+            //콜백 받는 부분
+            @Override
+            public void onResponse(Call<data_model> call, Response<data_model> response) {
+                data_model result = response.body();
+                String str = "";
+
+                int count = result.getResult().getCount();
+                List<Station> stationList = result.getResult().getStation();
+                if(count > 0) {
+                    str = "[" + stationList.get(0).getType() + "호선] " + stationList.get(0).getStationName() + "역 (" + stationList.get(0).getStationID() + ")";
+                    station_1 = stationList.get(0).getStationID().toString();
+                } else {
+                    str = "일치하는 역이 없습니다";
+                }
+                txt1_station.setText(str);
+            }
+
+            @Override
+            public void onFailure(Call<data_model> call, Throwable t) {
+
+            }
+        });
+        // call1 end
+
+        call2 = retrofit_client.getApiService().test_api_get(lang, x_2, y_2, radius, stationClass, apiKey);
+        call2.enqueue(new Callback<data_model>(){
+            //콜백 받는 부분
+            @Override
+            public void onResponse(Call<data_model> call, Response<data_model> response) {
+                data_model result = response.body();
+                String str = "";
+
+                int count = result.getResult().getCount();
+                List<Station> stationList = result.getResult().getStation();
+                if(count > 0) {
+                    str = "[" + stationList.get(0).getType() + "호선] " + stationList.get(0).getStationName() + "역 (" + stationList.get(0).getStationID() + ")";
+                    station_2 = stationList.get(0).getStationID().toString();
+                } else {
+                    str = "일치하는 역이 없습니다";
+                }
+                txt2_station.setText(str);
+            }
+
+            @Override
+            public void onFailure(Call<data_model> call, Throwable t) {
+
+            }
+        });
+        // call1 end
+
+        call3 = retrofit_client.getApiService().test_api_get(lang, x_3, y_3, radius, stationClass, apiKey);
+        call3.enqueue(new Callback<data_model>(){
+            //콜백 받는 부분
+            @Override
+            public void onResponse(Call<data_model> call, Response<data_model> response) {
+                data_model result = response.body();
+                String str = "";
+
+                int count = result.getResult().getCount();
+                List<Station> stationList = result.getResult().getStation();
+                if(count > 0) {
+                    str = "[" + stationList.get(0).getType() + "호선] " + stationList.get(0).getStationName() + "역 (" + stationList.get(0).getStationID() + ")";
+                    station_3 = stationList.get(0).getStationID().toString();
+                } else {
+                    str = "일치하는 역이 없습니다";
+                }
+                txt3_station.setText(str);
+            }
+
+            @Override
+            public void onFailure(Call<data_model> call, Throwable t) {
+
+            }
+        });
+
+
         // 버튼 클릭 시 이벤트
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 현재 위도, 경도를 기점으로 가까운 지하철 역 찾기
-                call = retrofit_client.getApiService().test_api_get(lang, x_1, y_1, radius, stationClass, apiKey);
-                call.enqueue(new Callback<data_model>(){
-                    //콜백 받는 부분
-                    @Override
-                    public void onResponse(Call<data_model> call, Response<data_model> response) {
-                        data_model result = response.body();
-                        String str = "";
-
-                        int count = result.getResult().getCount();
-                        List<Station> stationList = result.getResult().getStation();
-                        if(count > 0) {
-                            str = "[" + stationList.get(0).getType() + "호선] " + stationList.get(0).getStationName() + "역 (" + stationList.get(0).getStationID() + ")";
-                        } else {
-                            str = "일치하는 역이 없습니다";
-                        }
-                        txt1_station.setText(str);
-                    }
-
-                    @Override
-                    public void onFailure(Call<data_model> call, Throwable t) {
-
-                    }
-                });
-                // call1 end
-
-                call2 = retrofit_client.getApiService().test_api_get(lang, x_2, y_2, radius, stationClass, apiKey);
-                call2.enqueue(new Callback<data_model>(){
-                    //콜백 받는 부분
-                    @Override
-                    public void onResponse(Call<data_model> call, Response<data_model> response) {
-                        data_model result = response.body();
-                        String str = "";
-
-                        int count = result.getResult().getCount();
-                        List<Station> stationList = result.getResult().getStation();
-                        if(count > 0) {
-                            str = "[" + stationList.get(0).getType() + "호선] " + stationList.get(0).getStationName() + "역 (" + stationList.get(0).getStationID() + ")";
-                        } else {
-                            str = "일치하는 역이 없습니다";
-                        }
-                        txt2_station.setText(str);
-                    }
-
-                    @Override
-                    public void onFailure(Call<data_model> call, Throwable t) {
-
-                    }
-                });
-                // call1 end
-
-                call3 = retrofit_client.getApiService().test_api_get(lang, x_3, y_3, radius, stationClass, apiKey);
-                call3.enqueue(new Callback<data_model>(){
-                    //콜백 받는 부분
-                    @Override
-                    public void onResponse(Call<data_model> call, Response<data_model> response) {
-                        data_model result = response.body();
-                        String str = "";
-
-                        int count = result.getResult().getCount();
-                        List<Station> stationList = result.getResult().getStation();
-                        if(count > 0) {
-                            str = "[" + stationList.get(0).getType() + "호선] " + stationList.get(0).getStationName() + "역 (" + stationList.get(0).getStationID() + ")";
-                        } else {
-                            str = "일치하는 역이 없습니다";
-                        }
-                        txt3_station.setText(str);
-                    }
-
-                    @Override
-                    public void onFailure(Call<data_model> call, Throwable t) {
-
-                    }
-                });
-                // call1 end
+                // 화면 전환
+                Intent intent = new Intent(getApplicationContext(), SubwayActivity.class);
+                intent.putExtra("station_1", station_1);
+                intent.putExtra("station_2", station_2);
+                intent.putExtra("station_3", station_3);
+                startActivity(intent);
             }
         });
         // OnClick

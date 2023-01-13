@@ -9,6 +9,7 @@ public class retrofit_client {
     private static String BASE_URL = "https://api.odsay.com/";
 
     public static Retrofit_interface getApiService(){return getInstance().create(Retrofit_interface.class);}
+    public static Retrofit_interface2 getApiService2(){return getInstance().create(Retrofit_interface2.class);}
 
     private static Retrofit getInstance(){
         Gson gson = new GsonBuilder().setLenient().create();

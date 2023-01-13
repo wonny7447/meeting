@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SubwayActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_marginTop="36dp"
+        android:gravity="center"
+        android:text="중간 장소는 이촌역입니다."
+        android:textColor="#ff0000"
+        android:textSize="10pt" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="29dp" />
+
+    <TextView
+        android:id="@+id/txt1"
+        android:layout_width="match_parent"
+        android:layout_height="123dp"
+        android:layout_marginTop="48dp"
+        android:text="TextView"
+        android:textSize="8pt" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="2px"
+        android:background="@color/black" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <TextView
+        android:id="@+id/txt2"
+        android:layout_width="match_parent"
+        android:layout_height="161dp"
+        android:text="TextView"
+        android:textSize="8pt" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="2px"
+        android:background="@color/black" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <TextView
+        android:id="@+id/txt3"
+        android:layout_width="match_parent"
+        android:layout_height="198dp"
+        android:layout_marginBottom="188dp"
+        android:text="TextView"
+        android:textSize="8pt" />
+
+</LinearLayout>
